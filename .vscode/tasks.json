@@ -1,0 +1,64 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build",
+            "type": "shell",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "command": "make",
+            "problemMatcher": []
+        },
+        {
+            "label": "Build & run",
+            "type": "shell",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "command": "make",
+            "args": [
+                "run"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Tests: Clean",
+            "type": "shell",
+            "command": "./ceedling clobber",
+            "problemMatcher": []
+        },
+        {
+            "label": "Tests: Run (all)",
+            "type": "shell",
+            "command": "./ceedling test:all",
+            "problemMatcher": []
+        },
+        {
+            "label": "Tests: Run (file)",
+            "type": "shell",
+            "command": "./ceedling test:${file}",
+            "problemMatcher": []
+        },
+        {
+            "label": "Tests: Run with coverage (all)",
+            "type": "shell",
+            "command": "./ceedling gcov:all utils:gcov",
+            "problemMatcher": []
+        },
+        {
+            "label": "Tests: Run with coverage (file)",
+            "type": "shell",
+            "command": "./ceedling gcov:${file} utils:gcov",
+            "problemMatcher": []
+        },
+        {
+            "label": "Tests: Create module for current file",
+            "type": "shell",
+            "command": "./ceedling module:create\\[${fileBasenameNoExtension}\\]",
+            "problemMatcher": []
+        }
+    ]
+}
