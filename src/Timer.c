@@ -1,11 +1,14 @@
 #include "Timer.h"
-#include "TimeKeeper.h"
+#include "TimeSource.h"
 
 struct _Timer
 {
     uint32 delayInMillis;
     uint32 timeAtStartInMillis;
 };
+
+static boolean isInitialized(Timer *me);
+static Timer *getValidatedTimer(Timer *me);
 
 static Timer timersPool[NR_OF_TIMERS];
 
@@ -27,14 +30,16 @@ Timer *new_Timer()
 
 void Timer_start(Timer *me, uint32 delayInMillis)
 {
-    me->timeAtStartInMillis = TimeKeeper_getCurrentTimeInMillis();
+    me = getValidatedTimer(me);
+    me->timeAtStartInMillis = TimeSource_getCurrentTimeInMillis();
     me->delayInMillis = delayInMillis;
 }
 
 boolean Timer_isExpired(Timer *me)
 {
+    me = getValidatedTimer(me);
     boolean isExpired = false;
-    uint32 currentTimeInMillis = TimeKeeper_getCurrentTimeInMillis();
+    uint32 currentTimeInMillis = TimeSource_getCurrentTimeInMillis();
 
     if ((currentTimeInMillis - me->timeAtStartInMillis) >= me->delayInMillis)
     {
@@ -46,8 +51,9 @@ boolean Timer_isExpired(Timer *me)
 
 boolean Timer_isNotExpired(Timer *me)
 {
+    me = getValidatedTimer(me);
     boolean isNotExpired = true;
-    uint32 currentTimeInMillis = TimeKeeper_getCurrentTimeInMillis();
+    uint32 currentTimeInMillis = TimeSource_getCurrentTimeInMillis();
 
     if ((currentTimeInMillis - me->timeAtStartInMillis) >= me->delayInMillis)
     {
@@ -59,17 +65,42 @@ boolean Timer_isNotExpired(Timer *me)
 
 uint32 Timer_getPassedTimeInMillis(Timer *me)
 {
-    uint32 currentTimeInMillis = TimeKeeper_getCurrentTimeInMillis();
+    me = getValidatedTimer(me);
+    uint32 currentTimeInMillis = TimeSource_getCurrentTimeInMillis();
     uint32 passedTimeInMillis = currentTimeInMillis - me->timeAtStartInMillis;
     return passedTimeInMillis;
 }
 
 uint32 Timer_getDelayInMillis(Timer *me)
 {
+    me = getValidatedTimer(me);
     return me->delayInMillis;
 }
 
 uint32 Timer_getTimeAtStartInMillis(Timer *me)
 {
+    me = getValidatedTimer(me);
     return me->timeAtStartInMillis;
+}
+
+static boolean isInitialized(Timer *me)
+{
+    boolean isInitialized = true;
+
+    if ((me < &timersPool[0]) || me > &timersPool[NR_OF_TIMERS - 1])
+    {
+        isInitialized = false;
+    }
+
+    return isInitialized;
+}
+
+static Timer *getValidatedTimer(Timer *me)
+{
+    if (!isInitialized(me))
+    {
+        me = null;
+    }
+
+    return me;
 }

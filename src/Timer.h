@@ -9,8 +9,8 @@ typedef struct _Timer Timer;
 
 Timer *new_Timer();
 void Timer_start(Timer *me, uint32 delayInMillis);
-bool Timer_isExpired(Timer *me);
-bool Timer_isNotExpired(Timer *me);
+boolean Timer_isExpired(Timer *me);
+boolean Timer_isNotExpired(Timer *me);
 uint32 Timer_getPassedTimeInMillis(Timer *me);
 uint32 Timer_getDelayInMillis(Timer *me);
 uint32 Timer_getTimeAtStartInMillis(Timer *me);
