@@ -3,14 +3,11 @@
 #include "Timer.h"
 #include "mock_TimeSource.h"
 
-Timer *timers[NR_OF_TIMERS + 1];
+Timer * timers[NR_OF_TIMERS + 1];
 
 void setUpBeforeAll(void)
 {
-    for (uint8 i = 0; i < NR_OF_TIMERS - 1; i++)
-    {
-        timers[i] = new_Timer();
-    }
+    for (uint8 i = 0; i < NR_OF_TIMERS - 1; i++) { timers[i] = new_Timer(); }
 }
 
 void setUp(void)

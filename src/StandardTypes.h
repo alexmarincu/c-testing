@@ -1,9 +1,9 @@
 #ifndef F52A6565_6ED2_449F_81A3_1459311B0316
 #define F52A6565_6ED2_449F_81A3_1459311B0316
 
-#include <stdio.h>
-#include <stdint.h>
 #include <stdbool.h>
+#include <stdint.h>
+#include <stdio.h>
 
 #define null NULL
 typedef bool boolean;

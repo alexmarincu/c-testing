@@ -3,13 +3,9 @@
 #include "MainApp.h"
 #include "mock_Timer.h"
 
-void setUp(void)
-{
-}
+void setUp(void) {}
 
-void tearDown(void)
-{
-}
+void tearDown(void) {}
 
 void test_MainApp_NeedToImplement(void)
 {
