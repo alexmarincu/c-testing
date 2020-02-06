@@ -9,8 +9,7 @@ struct _Timer
 
 static Timer timersPool[NR_OF_TIMERS];
 
-static boolean isInitialized(Timer * me);
-static Timer * getValidatedTimer(Timer * me);
+static boolean isInitialized(Timer const * const me);
 
 Timer * new_Timer()
 {
@@ -28,60 +27,88 @@ Timer * new_Timer()
     return newTimer;
 }
 
-void Timer_start(Timer * me, uint32 delayInMillis)
+void Timer_start(Timer * const me, uint32 const delayInMillis)
 {
-    me = getValidatedTimer(me);
-    me->timeAtStartInMillis = TimeSource_getCurrentTimeInMillis();
-    me->delayInMillis = delayInMillis;
+    if (isInitialized(me))
+    {
+        me->timeAtStartInMillis = TimeSource_getCurrentTimeInMillis();
+        me->delayInMillis = delayInMillis;
+    }
+    else
+    {
+        /* error handling */
+    }
 }
 
-boolean Timer_isExpired(Timer * me)
+boolean Timer_isExpired(Timer const * const me)
 {
-    me = getValidatedTimer(me);
     boolean isExpired = false;
-    uint32 currentTimeInMillis = TimeSource_getCurrentTimeInMillis();
-    if ((currentTimeInMillis - me->timeAtStartInMillis) >= me->delayInMillis) { isExpired = true; }
+
+    if (isInitialized(me))
+    {
+        uint32 currentTimeInMillis = TimeSource_getCurrentTimeInMillis();
+        if ((currentTimeInMillis - me->timeAtStartInMillis) >= me->delayInMillis) { isExpired = true; }
+    }
+    else
+    {
+        /* error handling */
+    }
+
     return isExpired;
 }
 
-boolean Timer_isNotExpired(Timer * me)
+uint32 Timer_getPassedTimeInMillis(Timer const * const me)
 {
-    me = getValidatedTimer(me);
-    boolean isNotExpired = true;
-    uint32 currentTimeInMillis = TimeSource_getCurrentTimeInMillis();
-    if ((currentTimeInMillis - me->timeAtStartInMillis) >= me->delayInMillis) { isNotExpired = false; }
-    return isNotExpired;
-}
+    uint32 passedTimeInMillis = 0;
 
-uint32 Timer_getPassedTimeInMillis(Timer * me)
-{
-    me = getValidatedTimer(me);
-    uint32 currentTimeInMillis = TimeSource_getCurrentTimeInMillis();
-    uint32 passedTimeInMillis = currentTimeInMillis - me->timeAtStartInMillis;
+    if (isInitialized(me))
+    {
+        uint32 currentTimeInMillis = TimeSource_getCurrentTimeInMillis();
+        passedTimeInMillis = currentTimeInMillis - me->timeAtStartInMillis;
+    }
+    else
+    {
+        /* error handling */
+    }
+
     return passedTimeInMillis;
 }
 
-uint32 Timer_getDelayInMillis(Timer * me)
+uint32 Timer_getDelayInMillis(Timer const * const me)
 {
-    me = getValidatedTimer(me);
-    return me->delayInMillis;
+    uint32 delayInMillis = 0;
+
+    if (isInitialized(me))
+    {
+        delayInMillis = me->delayInMillis;
+    }
+    else
+    {
+        /* error handling */
+    }
+
+    return delayInMillis;
 }
 
-uint32 Timer_getTimeAtStartInMillis(Timer * me)
+uint32 Timer_getTimeAtStartInMillis(Timer const * const me)
 {
-    me = getValidatedTimer(me);
-    return me->timeAtStartInMillis;
+    uint32 timeAtStartInMillis = 0;
+
+    if (isInitialized(me))
+    {
+        timeAtStartInMillis = me->timeAtStartInMillis;
+    }
+    else
+    {
+        /* error handling */
+    }
+
+    return timeAtStartInMillis;
 }
 
-static boolean isInitialized(Timer * me)
+static boolean isInitialized(Timer const * const me)
 {
     boolean isInitialized = true;
     if ((me < &timersPool[0]) || (me > &timersPool[NR_OF_TIMERS - 1])) { isInitialized = false; }
     return isInitialized;
-}
-
-static Timer * getValidatedTimer(Timer * me)
-{
-    if (!isInitialized(me)) { me = null; }
-    return me;
 }

@@ -17,7 +17,7 @@ void MainApp_start(void)
         Timer_start(timer2, 500);
         Timer_start(timer3, 10);
 
-        while (Timer_isNotExpired(timer1) && Timer_isNotExpired(timer2) && Timer_isNotExpired(timer3)) { ; }
+        while (!Timer_isExpired(timer1) && !Timer_isExpired(timer2) && !Timer_isExpired(timer3)) { ; }
 
         printf("%d\n", Timer_getPassedTimeInMillis(timer1));
         printf("%d\n", Timer_getPassedTimeInMillis(timer2));

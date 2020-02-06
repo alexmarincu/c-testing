@@ -8,11 +8,10 @@
 typedef struct _Timer Timer;
 
 Timer * new_Timer();
-void Timer_start(Timer * me, uint32 delayInMillis);
-boolean Timer_isExpired(Timer * me);
-boolean Timer_isNotExpired(Timer * me);
-uint32 Timer_getPassedTimeInMillis(Timer * me);
-uint32 Timer_getDelayInMillis(Timer * me);
-uint32 Timer_getTimeAtStartInMillis(Timer * me);
+void Timer_start(Timer * const me, uint32 const delayInMillis);
+boolean Timer_isExpired(Timer const * const me);
+uint32 Timer_getPassedTimeInMillis(Timer const * const me);
+uint32 Timer_getDelayInMillis(Timer const * const me);
+uint32 Timer_getTimeAtStartInMillis(Timer const * const me);
 
 #endif /* B87FA3F9_30F8_4BB6_BC46_E2287260C54A */
