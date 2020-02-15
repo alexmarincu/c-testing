@@ -3,13 +3,13 @@
 
 struct _Timer
 {
-    uint32 delayInMillis;
-    uint32 timeAtStartInMillis;
+    UInt32 delayInMillis;
+    UInt32 timeAtStartInMillis;
 };
 
 static Timer timersPool[NR_OF_TIMERS];
 
-static boolean isInitialized(Timer const * const me);
+static Boolean isInitialized(Timer const * const me);
 
 Timer * new_Timer()
 {
@@ -27,7 +27,7 @@ Timer * new_Timer()
     return newTimer;
 }
 
-void Timer_start(Timer * const me, uint32 const delayInMillis)
+void Timer_start(Timer * const me, UInt32 const delayInMillis)
 {
     if (isInitialized(me))
     {
@@ -40,13 +40,13 @@ void Timer_start(Timer * const me, uint32 const delayInMillis)
     }
 }
 
-boolean Timer_isExpired(Timer const * const me)
+Boolean Timer_isExpired(Timer const * const me)
 {
-    boolean isExpired = false;
+    Boolean isExpired = false;
 
     if (isInitialized(me))
     {
-        uint32 currentTimeInMillis = TimeSource_getCurrentTimeInMillis();
+        UInt32 currentTimeInMillis = TimeSource_getCurrentTimeInMillis();
         if ((currentTimeInMillis - me->timeAtStartInMillis) >= me->delayInMillis) { isExpired = true; }
     }
     else
@@ -57,13 +57,13 @@ boolean Timer_isExpired(Timer const * const me)
     return isExpired;
 }
 
-uint32 Timer_getPassedTimeInMillis(Timer const * const me)
+UInt32 Timer_getPassedTimeInMillis(Timer const * const me)
 {
-    uint32 passedTimeInMillis = 0;
+    UInt32 passedTimeInMillis = 0;
 
     if (isInitialized(me))
     {
-        uint32 currentTimeInMillis = TimeSource_getCurrentTimeInMillis();
+        UInt32 currentTimeInMillis = TimeSource_getCurrentTimeInMillis();
         passedTimeInMillis = currentTimeInMillis - me->timeAtStartInMillis;
     }
     else
@@ -74,9 +74,9 @@ uint32 Timer_getPassedTimeInMillis(Timer const * const me)
     return passedTimeInMillis;
 }
 
-uint32 Timer_getDelayInMillis(Timer const * const me)
+UInt32 Timer_getDelayInMillis(Timer const * const me)
 {
-    uint32 delayInMillis = 0;
+    UInt32 delayInMillis = 0;
 
     if (isInitialized(me))
     {
@@ -90,9 +90,9 @@ uint32 Timer_getDelayInMillis(Timer const * const me)
     return delayInMillis;
 }
 
-uint32 Timer_getTimeAtStartInMillis(Timer const * const me)
+UInt32 Timer_getTimeAtStartInMillis(Timer const * const me)
 {
-    uint32 timeAtStartInMillis = 0;
+    UInt32 timeAtStartInMillis = 0;
 
     if (isInitialized(me))
     {
@@ -106,9 +106,9 @@ uint32 Timer_getTimeAtStartInMillis(Timer const * const me)
     return timeAtStartInMillis;
 }
 
-static boolean isInitialized(Timer const * const me)
+static Boolean isInitialized(Timer const * const me)
 {
-    boolean isInitialized = true;
+    Boolean isInitialized = true;
     if ((me < &timersPool[0]) || (me > &timersPool[NR_OF_TIMERS - 1])) { isInitialized = false; }
     return isInitialized;
 }

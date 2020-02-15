@@ -7,12 +7,12 @@ Timer * timers[NR_OF_TIMERS + 1];
 
 void setUpBeforeAll(void)
 {
-    for (uint8 i = 0; i < NR_OF_TIMERS - 1; i++) { timers[i] = new_Timer(); }
+    for (UInt8 i = 0; i < NR_OF_TIMERS - 1; i++) { timers[i] = new_Timer(); }
 }
 
 void setUp(void)
 {
-    static boolean isSetUpBeforeAllDone = false;
+    static Boolean isSetUpBeforeAllDone = false;
 
     if (!isSetUpBeforeAllDone)
     {
@@ -41,8 +41,8 @@ void test_Timer_start_should_initialize_timer(void)
     TimeSource_getCurrentTimeInMillis_ExpectAndReturn(651);
     Timer_start(timers[0], 500);
 
-    uint32 delay = Timer_getDelayInMillis(timers[0]);
-    uint32 timeAtStart = Timer_getTimeAtStartInMillis(timers[0]);
+    UInt32 delay = Timer_getDelayInMillis(timers[0]);
+    UInt32 timeAtStart = Timer_getTimeAtStartInMillis(timers[0]);
 
     TEST_ASSERT_EQUAL_UINT32(500, delay);
     TEST_ASSERT_EQUAL_UINT32(651, timeAtStart);

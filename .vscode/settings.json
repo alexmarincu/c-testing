@@ -1,22 +1,7 @@
 {
-    "files.associations": {
-        "*.tpp": "cpp",
-        "timer.h": "c",
-        "chrono": "cpp",
-        "condition_variable": "c",
-        "array": "c",
-        "hash_map": "c",
-        "deque": "c",
-        "list": "c",
-        "string": "c",
-        "vector": "c",
-        "iterator": "c",
-        "string_view": "c",
-        "tuple": "c",
-        "main.h": "c",
-        "common_include.h": "c",
-        "stdio.h": "c",
-        "unity.h": "c"
-    },
-    "terminal.integrated.shell.windows": "cmd.exe"
+    "search.exclude": {
+        "**/vendor/**": true,
+        "**/build/**": true,
+        "**/bin/**": true,
+    }
 }

@@ -11,7 +11,7 @@ void MainApp_start(void)
     Timer * timer2 = new_Timer();
     Timer * timer3 = new_Timer();
 
-    for (uint8 i = 0; i < 5; i++)
+    for (UInt8 i = 0; i < 5; i++)
     {
         Timer_start(timer1, 200);
         Timer_start(timer2, 500);
